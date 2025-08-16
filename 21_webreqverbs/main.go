@@ -9,7 +9,7 @@ import (
 
 func main() {
 	fmt.Println("WebRequestVerbs in Golang")
-	PerformGetRequest()
+	PerformPostRequest()
 }
 
 func PerformGetRequest() {
@@ -33,5 +33,29 @@ func PerformGetRequest() {
 	fmt.Println(responseString.String())
 
 	fmt.Println(content)
+	fmt.Println(string(content))
+}
+
+func PerformPostRequest() {
+	const myurl = "http://localhost:8000/post"
+
+	// fake JSON payload
+
+	requestBody := strings.NewReader(`
+		{
+			"dialogue":"I'm Vengeance",
+			"batrangs":"10",
+			"platform":"darkxnight.bat"
+		}
+	`)
+
+	response, err := http.Post(myurl, "application/json", requestBody)
+	if err != nil {
+		panic(err)
+	}
+
+	defer response.Body.Close()
+
+	content, _ := io.ReadAll(response.Body)
 	fmt.Println(string(content))
 }
