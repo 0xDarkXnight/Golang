@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -26,7 +26,7 @@ func PerformGetRequest() {
 	fmt.Println("Content Length is:", response.ContentLength)
 
 	var responseString strings.Builder
-	content, _ := ioutil.ReadAll(response.Body)
+	content, _ := io.ReadAll(response.Body)
 	byteCount, _ := responseString.Write(content)
 
 	fmt.Println("ByteCount is:", byteCount)
